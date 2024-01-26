@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/black">
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="NAME"
+        android:textStyle="bold"
+        android:textSize="18sp">
+
+    </TextView>
+    <TextView
+        android:id="@+id/textViewRace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="RACE"
+        android:layout_below="@id/textViewName"
+        android:textSize="16sp">
+    </TextView>
+    <TextView
+        android:id="@+id/textViewCharacterClass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_toRightOf="@id/textViewRace"
+        android:layout_below="@id/textViewName"
+        android:textSize="16sp"
+        android:text="CLASS"
+        android:layout_marginLeft="8dp">
+    </TextView>
+    <TextView
+        android:id="@+id/textViewLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_toRightOf="@id/textViewCharacterClass"
+        android:layout_below="@id/textViewName"
+        android:text="LEVEL"
+        android:textSize="16sp"
+        android:layout_marginLeft="8dp"/>
+
+    <!-- TODO: dodati ui komponenet da se prikazu detalji o karakteru-->
+
+    <Button
+        android:id="@+id/btnEditCharacter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="20sp"
+        android:textStyle="bold">
+    </Button>
+</RelativeLayout>

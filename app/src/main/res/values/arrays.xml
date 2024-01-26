@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="character_classes">
+        <item>Select Class</item>
+        <item>Barbarian</item>
+        <item>Bard</item>
+        <item>Cleric</item>
+        <item>Druid</item>
+        <item>Fighter</item>
+        <item>Monk</item>
+        <item>Paladin</item>
+        <item>Ranger</item>
+        <item>Rogue</item>
+        <item>Sorcerer</item>
+        <item>Warlock</item>
+        <item>Wizard</item>
+    </array>
+    <array name="character_level">
+        <item>Select Level</item>
+        <item>Level 1</item>>
+        <item>Level 2</item>>
+        <item>Level 3</item>>
+        <item>Level 4</item>>
+        <item>Level 5</item>>
+        <item>Level 6</item>>
+        <item>Level 7</item>>
+        <item>Level 8</item>>
+        <item>Level 9</item>>
+        <item>Level 10</item>>
+        <item>Level 11</item>>
+        <item>Level 12</item>>
+        <item>Level 13</item>>
+        <item>Level 14</item>>
+        <item>Level 15</item>>
+        <item>Level 16</item>>
+        <item>Level 17</item>>
+        <item>Level 18</item>>
+        <item>Level 19</item>>
+        <item>Level 20</item>>
+    </array>
+</resources>
