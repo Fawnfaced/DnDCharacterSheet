@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">DnDCharacterSheet</string>
+    <string name="charisma">CHA</string>
+    <string name="wisdom">WIS</string>
+    <string name="intelligence">INT</string>
+    <string name="constitution">CON</string>
+    <string name="dexterity">DEX</string>
+    <string name="strength">STR</string>
 </resources>

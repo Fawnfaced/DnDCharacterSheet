@@ -1,24 +1,45 @@
 package com.example.dndcharactersheet.models;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class Character {
     private long id;
     private String name;
     private String race;
     private String characterClass;
     private int level;
-    private int hp;
-    private int[] abilityScores; //abilityScores are Strength, Dexterity, Constitution, Wisdom, Intelligence, Charisma
+    private String[] abilityScores;//abilityScores su Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma
     private String inventory;
-    private String hitDice;
 
     //  TODO dodati jos stvari ako je potrebno
 
-    public int[] getAbilityScores(){
+    public String[] getAbilityScores(){
+        if (this.abilityScores == null){
+            this.abilityScores = new String[6];
+        }
         return abilityScores;
     }
 
-    public void setAbilityScores(int[] abilityScores) {
+    public String getAbilityScoresAsString(){
+        return Arrays.toString(abilityScores);
+    }
+
+    public void setAbilityScores(String[] abilityScores) {
         this.abilityScores = abilityScores;
+    }
+
+    public void setAbilityScoresFromString(String abilityScoresString){
+        if (abilityScoresString != null && !abilityScoresString.isEmpty()){
+
+            String[] scoresArray = abilityScoresString.substring(1,abilityScoresString.length()-1).split(", ");
+            String[] scores = new String[scoresArray.length];
+
+            for (int i = 0; i <scoresArray.length; i++){
+                scores[i] = scoresArray[i];
+            }
+            this.abilityScores = scores;
+        }
     }
 
     public int getLevel() {
@@ -59,22 +80,6 @@ public class Character {
 
     public void setCharacterClass(String characterClass) {
         this.characterClass = characterClass;
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public String getHitDice() {
-        return hitDice;
-    }
-
-    public void setHitDice(String hitDice) {
-        this.hitDice = hitDice;
     }
 
     public String getInventory() {

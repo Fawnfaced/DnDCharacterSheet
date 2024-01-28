@@ -14,30 +14,109 @@
         android:hint="Name"
         android:textColorHint="@color/light_grey"
         android:textColor="@color/white"/>
+
     <EditText
         android:id="@+id/editTextRace"
-        android:layout_below="@id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:hint="Race"
         android:textColorHint="@color/light_grey"
         android:textColor="@color/white"/>
 
-    <Spinner
-         android:id="@+id/spinnerCharacterClass"
-         android:layout_width="match_parent"
-         android:layout_height="48dp"
-         android:layout_marginTop="8dp"
-         android:background="@android:drawable/btn_dropdown"
-         android:spinnerMode="dropdown"
-         android:entries="@array/character_classes"/>
-    <Spinner
-         android:id="@+id/spinnerLevel"
-         android:layout_width="wrap_content"
-         android:layout_height="48dp"
-         android:layout_marginTop="2dp"
-         android:background="@android:drawable/btn_dropdown"
-         android:entries="@array/character_level"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Spinner
+            android:id="@+id/spinnerCharacterClass"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"
+            android:entries="@array/character_classes"
+            android:layout_weight="1"/>
+        <Spinner
+            android:id="@+id/spinnerLevel"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:drawable/btn_dropdown"
+            android:entries="@array/character_level"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/editTextStr"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="@string/strength"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_grey"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:maxLength="2"
+            />
+        <EditText
+            android:id="@+id/editTextDex"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="@string/dexterity"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_grey"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:maxLength="2"
+            />
+        <EditText
+            android:id="@+id/editTextCon"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="@string/constitution"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_grey"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:maxLength="2"
+            />
+        <EditText
+            android:id="@+id/editTextInt"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="@string/intelligence"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_grey"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:maxLength="2"
+            />
+        <EditText
+            android:id="@+id/editTextWis"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="@string/wisdom"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_grey"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:maxLength="2"
+            />
+        <EditText
+            android:id="@+id/editTextCha"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="@string/charisma"
+            android:textColor="@color/white"
+            android:textColorHint="@color/light_grey"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:maxLength="2"
+            />
+    </LinearLayout>
 
 
 

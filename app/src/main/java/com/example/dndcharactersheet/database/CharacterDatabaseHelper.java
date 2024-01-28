@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.dndcharactersheet.models.Character;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class CharacterDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "character_db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 6;
 
     public static final String TABLE_CHARACTERS = "characters";
     public static final String COLUMN_ID = "_id";
@@ -21,6 +22,7 @@ public class CharacterDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_RACE = "race";
     public static final String COLUMN_CLASS = "class";
     public static final String COLUMN_LEVEL = "level";
+    public static final String COLUMN_ABILITY_SCORES = "ability_scores";
     // TODO: dodati jos potrebnih informacija
 
 
@@ -30,7 +32,8 @@ public class CharacterDatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_NAME + " TEXT, " +
                     COLUMN_RACE + " TEXT, " +
                     COLUMN_CLASS + " TEXT, " +
-                    COLUMN_LEVEL + " INTEGER);";
+                    COLUMN_LEVEL + " INTEGER, " +
+                    COLUMN_ABILITY_SCORES + " TEXT);";
 
     public CharacterDatabaseHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -49,6 +52,8 @@ public class CharacterDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_RACE, character.getRace());
         values.put(COLUMN_CLASS, character.getCharacterClass());
         values.put(COLUMN_LEVEL, character.getLevel());
+        values.put(COLUMN_ABILITY_SCORES, character.getAbilityScoresAsString());
+
         //TODO: Ostalo
 
         long characterId = db.insert(TABLE_CHARACTERS, null, values);
@@ -58,6 +63,7 @@ public class CharacterDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public List<Character> getAllCharacters(){
+        //dostavlja listu svih karaktera iz baze podataka
         List<Character> characterList = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -71,6 +77,7 @@ public class CharacterDatabaseHelper extends SQLiteOpenHelper {
                 character.setRace(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RACE)));
                 character.setCharacterClass(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CLASS)));
                 character.setLevel(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_LEVEL)));
+                character.setAbilityScoresFromString(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ABILITY_SCORES)));
 
                 characterList.add(character);
             } while (cursor.moveToNext());
@@ -100,7 +107,7 @@ public class CharacterDatabaseHelper extends SQLiteOpenHelper {
             character.setRace(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_RACE)));
             character.setCharacterClass(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CLASS)));
             character.setLevel(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_LEVEL)));
-
+            character.setAbilityScoresFromString(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ABILITY_SCORES)));
             cursor.close();
         }
 
@@ -109,14 +116,15 @@ public class CharacterDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int updateCharacter(Character character) {
-            SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
 
-            ContentValues values = new ContentValues();
-            values.put(COLUMN_NAME, character.getName());
-            values.put(COLUMN_RACE, character.getRace());
-            values.put(COLUMN_CLASS, character.getCharacterClass());
-            values.put(COLUMN_LEVEL, character.getLevel());
-            // TODO: ostalo
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, character.getName());
+        values.put(COLUMN_RACE, character.getRace());
+        values.put(COLUMN_CLASS, character.getCharacterClass());
+        values.put(COLUMN_LEVEL, character.getLevel());
+        values.put(COLUMN_ABILITY_SCORES, character.getAbilityScoresAsString());
+        // TODO: ostalo
 
         return db.update(TABLE_CHARACTERS, values, COLUMN_ID + " = ?",
                 new String[]{String.valueOf(character.getId())});

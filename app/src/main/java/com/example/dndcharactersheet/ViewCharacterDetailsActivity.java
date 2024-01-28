@@ -1,6 +1,7 @@
 package com.example.dndcharactersheet;
 
 import static com.example.dndcharactersheet.util.Constants.CHARACTER_ID_KEY;
+import static com.example.dndcharactersheet.util.Constants.CLASSES_HP;
 import static com.example.dndcharactersheet.util.Constants.EDIT_MODE_KEY;
 import static com.example.dndcharactersheet.util.Constants.REQUEST_EDIT_CHARACTER;
 
@@ -18,7 +19,10 @@ import com.example.dndcharactersheet.database.CharacterDatabaseHelper;
 import com.example.dndcharactersheet.models.Character;
 
 public class ViewCharacterDetailsActivity extends AppCompatActivity {
-    private TextView textViewName, textViewRace, textViewCharacterClass,textViewLevel;
+    private TextView textViewName, textViewRace, textViewCharacterClass,textViewLevel,textViewHP;
+    private TextView textViewStr, textViewDex, textViewCon, textViewInt, textViewWis, textViewCha;
+    private TextView textViewStrMod, textViewDexMod, textViewConMod, textViewIntMod, textViewWisMod, textViewChaMod;
+
     private Button btnEditCharacter;
 
     @Override
@@ -27,11 +31,26 @@ public class ViewCharacterDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_character_details);
 
         long characterId = getIntent().getLongExtra(CHARACTER_ID_KEY, -1);
-
+        //inicijalizacija textView
         textViewName = findViewById(R.id.textViewName);
         textViewRace = findViewById(R.id.textViewRace);
         textViewCharacterClass = findViewById(R.id.textViewCharacterClass);
         textViewLevel = findViewById(R.id.textViewLevel);
+        textViewHP = findViewById(R.id.textViewHP);
+
+        textViewStr = findViewById(R.id.textViewStr);
+        textViewDex = findViewById(R.id.textViewDex);
+        textViewCon = findViewById(R.id.textViewCon);
+        textViewInt = findViewById(R.id.textViewInt);
+        textViewWis = findViewById(R.id.textViewWis);
+        textViewCha = findViewById(R.id.textViewCha);
+
+        textViewStrMod = findViewById(R.id.textViewStrMod);
+        textViewDexMod = findViewById(R.id.textViewDexMod);
+        textViewConMod = findViewById(R.id.textViewConMod);
+        textViewIntMod = findViewById(R.id.textViewIntMod);
+        textViewWisMod = findViewById(R.id.textViewWisMod);
+        textViewChaMod = findViewById(R.id.textViewChaMod);
 
         btnEditCharacter = findViewById(R.id.btnEditCharacter);
         btnEditCharacter.setOnClickListener(new View.OnClickListener() {
@@ -48,16 +67,62 @@ public class ViewCharacterDetailsActivity extends AppCompatActivity {
         // poziva se da bi se update ui
         Character character = getCharacterFromDatabase(characterId);
 
-        if (character != null) {
+        if (character != null && character.getAbilityScores() != null) {
             textViewName.setText(String.format("Name: %s", character.getName()));
             textViewRace.setText(String.format("Race: %s", character.getRace()));
             textViewCharacterClass.setText(String.format("Class: %s", character.getCharacterClass()));
             textViewLevel.setText(String.format("Level: %d", character.getLevel()));
+
+            textViewStr.setText(String.format("%s", character.getAbilityScores()[0]));
+            textViewDex.setText(String.format("%s", character.getAbilityScores()[1]));
+            textViewCon.setText(String.format("%s", character.getAbilityScores()[2]));
+            textViewInt.setText(String.format("%s", character.getAbilityScores()[3]));
+            textViewWis.setText(String.format("%s", character.getAbilityScores()[4]));
+            textViewCha.setText(String.format("%s", character.getAbilityScores()[5]));
+
+            textViewStrMod.setText(String.format("%s", modifierFromAbilityScore(character.getAbilityScores()[0])));
+            textViewDexMod.setText(String.format("%s", modifierFromAbilityScore(character.getAbilityScores()[1])));
+            textViewConMod.setText(String.format("%s", modifierFromAbilityScore(character.getAbilityScores()[2])));
+            textViewIntMod.setText(String.format("%s", modifierFromAbilityScore(character.getAbilityScores()[3])));
+            textViewWisMod.setText(String.format("%s", modifierFromAbilityScore(character.getAbilityScores()[4])));
+            textViewChaMod.setText(String.format("%s", modifierFromAbilityScore(character.getAbilityScores()[5])));
+
+            textViewHP.setText(String.format("%d", hPFromClasses(character.getCharacterClass(),
+                    character.getLevel(),character.getAbilityScores()[2])));
+
             // TODO: ostalo
         } else {
             Toast.makeText(this, "Character not found", Toast.LENGTH_SHORT).show();
         }
 
+    }
+    private int hPFromClasses(String characterClass, int level, String constitutionString){
+        int hp = 0;
+        //hp = (classHP/2)*(level-1)+ classHP + conMod*leve
+        String constitutionModString = modifierFromAbilityScore(constitutionString);
+        int constitutionMod = Integer.parseInt(constitutionModString.replaceAll("[^\\d.]",""));
+            if (CLASSES_HP.containsKey(characterClass)){
+                hp = (int)Math.ceil(CLASSES_HP.get(characterClass)*(level-1)/2) +
+                        CLASSES_HP.get(characterClass) + constitutionMod * level;
+            }
+            if (hp<=0){
+                hp = 1;
+            }
+
+        return hp;
+    }
+
+    private String modifierFromAbilityScore(String abilityScore){
+        String modifier;
+        int modFromAScore;
+        modFromAScore = (Integer.parseInt(abilityScore)-10)/2;
+        if (modFromAScore >0){
+            modifier = "+" + String.valueOf(modFromAScore);
+        } else {
+            modifier = String.valueOf(modFromAScore);
+        }
+
+        return modifier;
     }
 
     private Character getCharacterFromDatabase(long characterId){
