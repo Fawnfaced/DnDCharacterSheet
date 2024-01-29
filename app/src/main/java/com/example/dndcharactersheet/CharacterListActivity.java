@@ -1,12 +1,9 @@
 package com.example.dndcharactersheet;
 
-import static com.example.dndcharactersheet.util.Constants.REQUEST_EDIT_CHARACTER;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,8 +22,6 @@ import android.widget.Toast;
 public class CharacterListActivity extends AppCompatActivity {
     private CharacterAdapter characterAdapter;
     private List<Character> characterList;
-    private CharacterDatabaseHelper databaseHelper;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -36,8 +31,6 @@ public class CharacterListActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerViewCharacterList);
         characterList = new ArrayList<>();
         characterAdapter = new CharacterAdapter(characterList, this);
-
-        databaseHelper = new CharacterDatabaseHelper(this);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -126,28 +119,5 @@ public class CharacterListActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Failed to delete Character", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-        super.onActivityResult(requestCode, resultCode,data);
-
-        if (requestCode == REQUEST_EDIT_CHARACTER && resultCode == RESULT_OK){
-            long updatedCharacterId = data.getLongExtra("updatedCharacterId", -1);
-            if (updatedCharacterId != -1){
-                updatedCharacterInList(updatedCharacterId);
-            }
-        }
-    }
-
-    private void updatedCharacterInList(long updatedCharacterId){
-        for (int i = 0; i<characterList.size(); i++ ){
-            if (characterList.get(i).getId() == updatedCharacterId){
-                characterList.set(i, databaseHelper.getCharacter(updatedCharacterId));
-                characterAdapter.notifyItemChanged(i);
-                break;
-            }
-        }
-
     }
 }

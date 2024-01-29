@@ -1,29 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
     android:background="@color/black">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/bg_dice_white_on_black_x4_darker"
+        android:scaleType="centerCrop"
+        android:contentDescription="Background of the MainActivity">
 
-
-    <Button
-        android:id="@+id/btnCharacterList"
+    </ImageView>
+    <LinearLayout
+        android:padding="18dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Character List"
-        android:textSize="20sp"/>
-
-    <Button
-        android:id="@+id/btnCreateCharacter"
-        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_centerVertical="true"
+        >
+        <Button
+            android:id="@+id/btnCharacterList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Character List"
+            android:textSize="25sp" />
+        <Button
+            android:id="@+id/btnCreateCharacter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Character"
+            android:textSize="25sp" />
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create Character"
-        android:textSize="20sp"/>
+        android:text="Version 0.1.3"
+        android:paddingBottom="4dp"
+        android:paddingEnd="4dp"
+        android:textSize="14sp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/light_grey"
+        />
 
-    <!-- TODO: vise opcija ako je potrbeno npr
-            - lista spell-ova
-            - lista feat-ova
-            - ...-->
+    <!-- TODO: vise opcija ako je potrbeno npr-->
 
-</LinearLayout>
+
+</RelativeLayout>

@@ -11,6 +11,7 @@ public class Constants {
     public static final int ABILITY_SCORE_MAX = 24;
     public static final String[] CLASSES = {"Barbarian","Bard", "Cleric", "Druid", "Fighter", "Monk",
             "Paladin", "Ranger", "Rogue", "Sorcerer","Warlock", "Wizard"};
+    public static final int SPLASH_TIME_OUT=1600;
     public static final Map<String, Integer> CLASSES_HP;
     static{
         CLASSES_HP = new HashMap<>();
