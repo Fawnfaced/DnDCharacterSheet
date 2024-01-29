@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dndcharactersheet.database.CharacterDatabaseHelper;
 import com.example.dndcharactersheet.models.Character;
+import com.example.dndcharactersheet.util.ClickHelper;
 import com.example.dndcharactersheet.util.Constants;
 
 import java.util.Arrays;
@@ -58,7 +59,9 @@ public class CreateCharacterActivity extends AppCompatActivity {
         btnSaveCharacter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveCharacter();
+                if (ClickHelper.isSingleClick()) {
+                    saveCharacter();
+                }
             }
         });
     }
@@ -91,7 +94,6 @@ public class CreateCharacterActivity extends AppCompatActivity {
             } else if (value > Constants.ABILITY_SCORE_MAX) {
                 editTextAbilityScores[index].setText(String.valueOf(Constants.ABILITY_SCORE_MAX));
                 Toast.makeText(this, "Ability Score too high! Setting it to 24.", Toast.LENGTH_SHORT).show();
-
             }
         }
     }
@@ -110,7 +112,6 @@ public class CreateCharacterActivity extends AppCompatActivity {
             for (int i = 0; i< editTextAbilityScores.length; i++){
                 editTextAbilityScores[i].setText(character.getAbilityScores()[i]);
             }
-
         } else {
             Toast.makeText(this, "Character not found", Toast.LENGTH_SHORT).show();
         }
@@ -163,14 +164,10 @@ public class CreateCharacterActivity extends AppCompatActivity {
         updateCharacter.setCharacterClass(selectClass);
         updateCharacter.setLevel(level);
         updateCharacter.setAbilityScoresFromString(Arrays.toString(abilityScores));
-        //TODO: ostalo
-
 
         Intent intent = getIntent();
         long characterId = intent.getLongExtra("characterId", -1);
         boolean editMode = intent.getBooleanExtra("editMode",false);
-
-
 
         CharacterDatabaseHelper databaseHelper = new CharacterDatabaseHelper(this);
 

@@ -23,8 +23,6 @@ public class CharacterDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_CLASS = "class";
     public static final String COLUMN_LEVEL = "level";
     public static final String COLUMN_ABILITY_SCORES = "ability_scores";
-    // TODO: dodati jos potrebnih informacija
-
 
     private static final String CREATE_TABLE_CHARACTERS =
             "CREATE TABLE " + TABLE_CHARACTERS + " (" +
@@ -53,8 +51,6 @@ public class CharacterDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_CLASS, character.getCharacterClass());
         values.put(COLUMN_LEVEL, character.getLevel());
         values.put(COLUMN_ABILITY_SCORES, character.getAbilityScoresAsString());
-
-        //TODO: Ostalo
 
         long characterId = db.insert(TABLE_CHARACTERS, null, values);
         db.close();
@@ -112,7 +108,6 @@ public class CharacterDatabaseHelper extends SQLiteOpenHelper {
         }
 
         return character;
-
     }
 
     public int updateCharacter(Character character) {
@@ -124,11 +119,9 @@ public class CharacterDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_CLASS, character.getCharacterClass());
         values.put(COLUMN_LEVEL, character.getLevel());
         values.put(COLUMN_ABILITY_SCORES, character.getAbilityScoresAsString());
-        // TODO: ostalo
 
         return db.update(TABLE_CHARACTERS, values, COLUMN_ID + " = ?",
                 new String[]{String.valueOf(character.getId())});
-
     }
 
     public boolean deleteCharacter(long characterId) {
@@ -142,6 +135,5 @@ public class CharacterDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHARACTERS);
         onCreate(db);
-
     }
 }

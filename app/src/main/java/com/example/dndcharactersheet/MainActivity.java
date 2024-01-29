@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.dndcharactersheet.util.ClickHelper;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -20,18 +22,20 @@ public class MainActivity extends AppCompatActivity {
         btnCharacterList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CharacterListActivity.class);
-                startActivity(intent);
-
+                if (ClickHelper.isSingleClick()) {
+                    Intent intent = new Intent(MainActivity.this, CharacterListActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
         btnCreateCharacter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CreateCharacterActivity.class);
-                startActivity(intent);
-
+                if (ClickHelper.isSingleClick()) {
+                    Intent intent = new Intent(MainActivity.this, CreateCharacterActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

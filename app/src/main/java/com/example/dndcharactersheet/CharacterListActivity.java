@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dndcharactersheet.adapters.CharacterAdapter;
 import com.example.dndcharactersheet.database.CharacterDatabaseHelper;
 import com.example.dndcharactersheet.models.Character;
+import com.example.dndcharactersheet.util.ClickHelper;
+import com.example.dndcharactersheet.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 public class CharacterListActivity extends AppCompatActivity {
     private CharacterAdapter characterAdapter;
     private List<Character> characterList;
+    private long lastClickTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -37,28 +40,33 @@ public class CharacterListActivity extends AppCompatActivity {
         recyclerView.setAdapter(characterAdapter);
 
         loadCharacters();
+    }
 
+    @Override
+    protected void onRestart(){
+        //azurira listu karaktera kad se vrati na activity
+        super.onRestart();
+
+        loadCharacters();
     }
 
     private void loadCharacters() {
-
-        // Update characterList and notify the adapter
+        // azurira CharacterList i obavestava adapter
         CharacterDatabaseHelper databaseHelper = new CharacterDatabaseHelper(this);
         List<Character> characters = databaseHelper.getAllCharacters();
-
 
         characterAdapter.setOnItemClickListener(new CharacterAdapter.OnItemClickListener()
         {
 
             @Override
-            public void onItemClick ( int position){
-                openCharacterDetails(characterList.get(position).getId());
-        }
-            @Override
-            public void onItemLongClick(int position) {
-                showOptionsDialog(position);
+            public void onItemClick (int position){
+                if (ClickHelper.isSingleClick()){
+                    openCharacterDetails(characterList.get(position).getId());
+                }
             }
 
+            @Override
+            public void onItemLongClick(int position) {showOptionsDialog(position);}
         });
 
         characterList.clear();
@@ -74,12 +82,12 @@ public class CharacterListActivity extends AppCompatActivity {
                 if (which == 0) {
                     deleteCharacter(position);
                 }
-
             }
         });
         builder.setNegativeButton("Cancel",null);
         builder.show();
     }
+
     private void openCharacterDetails(long characterId){
         Intent intent = new Intent(CharacterListActivity.this, ViewCharacterDetailsActivity.class);
         intent.putExtra("characterId", characterId);
@@ -98,12 +106,11 @@ public class CharacterListActivity extends AppCompatActivity {
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
+            public void onClick(DialogInterface dialog, int which) {}
         });
         builder.show();
     }
+
 
     private void deleteCharacterFromDatabase(int position){
         long characterId = characterList.get(position).getId();

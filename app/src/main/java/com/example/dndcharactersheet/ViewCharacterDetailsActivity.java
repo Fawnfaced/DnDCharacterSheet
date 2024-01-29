@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.dndcharactersheet.database.CharacterDatabaseHelper;
 import com.example.dndcharactersheet.models.Character;
+import com.example.dndcharactersheet.util.ClickHelper;
 import com.example.dndcharactersheet.util.Constants;
 
 import java.util.Locale;
@@ -53,12 +54,13 @@ public class ViewCharacterDetailsActivity extends AppCompatActivity {
         btnEditCharacter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openEditCharacterActivity(characterId);
+                if (ClickHelper.isSingleClick()) {
+                    openEditCharacterActivity(characterId);
+                }
             }
         });
 
         updateUI(characterId);
-
     }
     private void updateUI(long characterId){
         // poziva se da bi se update ui
@@ -84,18 +86,16 @@ public class ViewCharacterDetailsActivity extends AppCompatActivity {
             textViewWisMod.setText(String.format("%s", modifierFromAbilityScore(character.getAbilityScores()[4])));
             textViewChaMod.setText(String.format("%s", modifierFromAbilityScore(character.getAbilityScores()[5])));
 
-            textViewHP.setText(String.format(Locale.US, "%d", hPFromClasses(character.getCharacterClass(),
+            textViewHP.setText(String.format(Locale.US, "%d", hPFromCharacterClasses(character.getCharacterClass(),
                     character.getLevel(),character.getAbilityScores()[2])));
 
             textViewHD.setText(String.format(Locale.US, "%dd%s",character.getLevel(), Constants.CLASSES_HP.get(character.getCharacterClass())));
 
-            // TODO: ostalo
         } else {
             Toast.makeText(this, "Character not found", Toast.LENGTH_SHORT).show();
         }
-
     }
-    private int hPFromClasses(String characterClass, int level, String constitutionString){
+    private int hPFromCharacterClasses(String characterClass, int level, String constitutionString){
         int hp = 0;
         //hp = (classHP/2)*(level-1)+ classHP + conMod*leve
         String constitutionModString = modifierFromAbilityScore(constitutionString);
@@ -127,7 +127,6 @@ public class ViewCharacterDetailsActivity extends AppCompatActivity {
     private Character getCharacterFromDatabase(long characterId){
         CharacterDatabaseHelper databaseHelper = new CharacterDatabaseHelper(this);
         return databaseHelper.getCharacter(characterId);
-
     }
 
     private void openEditCharacterActivity(long characterId){
@@ -135,7 +134,6 @@ public class ViewCharacterDetailsActivity extends AppCompatActivity {
         intent.putExtra(Constants.EDIT_MODE_KEY,true);//oznacava rezim editovanja
         intent.putExtra(Constants.CHARACTER_ID_KEY, characterId);
         startActivityForResult(intent, Constants.REQUEST_EDIT_CHARACTER);
-
     }
 
     @Override
@@ -149,7 +147,6 @@ public class ViewCharacterDetailsActivity extends AppCompatActivity {
 
             updateIntent.putExtra("updatedCharacterId", characterId);
             setResult(RESULT_OK,updateIntent);
-
 
             updateUI(characterId);
         }

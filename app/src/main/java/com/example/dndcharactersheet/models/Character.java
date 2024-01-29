@@ -1,6 +1,5 @@
 package com.example.dndcharactersheet.models;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Character {
@@ -9,10 +8,9 @@ public class Character {
     private String race;
     private String characterClass;
     private int level;
-    private String[] abilityScores;//abilityScores su Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma
+    //abilityScores su Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma
+    private String[] abilityScores;
     private String inventory;
-
-    //  TODO dodati jos stvari ako je potrebno
 
     public String[] getAbilityScores(){
         if (this.abilityScores == null){
